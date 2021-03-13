@@ -55,15 +55,15 @@ function taoBang(arr) {
     }
     getEle("todo").innerHTML = contentToDo;
     getEle("completed").innerHTML = contentComplete;
-    // var recycleBin = document.getElementsByClassName("fa");
-    // for (var i = 0; i < recycleBin.length; i++) {
-    //     recycleBin[i].classList += " recycle";
-    // }
+    var recycleBin = document.getElementsByClassName("fa");
+    for (var i = 0; i < recycleBin.length; i++) {
+        recycleBin[i].classList += " recycle";
+    }
 
-    // var check = document.getElementsByClassName("far");
-    // for (var i = 0; i < check.length; i++) {
-    //     check[i].classList += " check";
-    // }
+    var check = document.getElementsByClassName("far");
+    for (var i = 0; i < check.length; i++) {
+        check[i].classList += " check";
+    }
 };
 
 function taoBangEdit(arr) {
