@@ -26,10 +26,18 @@ function TaskService() {
             method: "DELETE",
         });
     };
-    this.changeDanhSachTaskService = function(id) {
+    this.layDanhSachTaskServiceChange = function(id) {
         return axios({
             url: "https://6044315ba20ace001728eb6e.mockapi.io/api/Task/" + id,
-            methos: "PUT"
+            method: "GET",
+        })
+    }
+    this.changeDanhSachTaskService = function(task) {
+        console.log(task.id);
+        return axios({
+            url: "https://6044315ba20ace001728eb6e.mockapi.io/api/Task/" + task.id,
+            method: "PUT",
+            data: task,
         })
     };
 

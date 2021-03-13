@@ -17,10 +17,14 @@ function layDanhSachTask() {
         })
 };
 
+
+
 function taoBang(arr) {
-    var content = "";
+    var contentToDo = "";
+    var contentComplete = "";
     for (var i = 0; i < arr.length; i++) {
-        content += `
+        if (arr[i].status) {
+            contentToDo += `
         <li>
             <span>${arr[i].taskText}</span>
             <div class="buttons">
@@ -33,17 +37,33 @@ function taoBang(arr) {
             </div>
         </li>
         `
+        } else {
+            contentComplete += `
+        <li>
+            <span>${arr[i].taskText}</span>
+            <div class="buttons">
+                <button class"remove" onclick="xoaTask(${arr[i].id})">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
+                <button class"complete" onclick="changeTask(${arr[i].id})">
+                    <i class="fas fa-check-circle"></i>
+                </button>
+            </div>
+        </li>
+        `
+        }
     }
-    getEle("todo").innerHTML = content;
-    var recycleBin = document.getElementsByClassName("fa");
-    for (var i = 0; i < recycleBin.length; i++) {
-        recycleBin[i].classList += " recycle";
-    }
+    getEle("todo").innerHTML = contentToDo;
+    getEle("completed").innerHTML = contentComplete;
+    // var recycleBin = document.getElementsByClassName("fa");
+    // for (var i = 0; i < recycleBin.length; i++) {
+    //     recycleBin[i].classList += " recycle";
+    // }
 
-    var check = document.getElementsByClassName("far");
-    for (var i = 0; i < check.length; i++) {
-        check[i].classList += " check";
-    }
+    // var check = document.getElementsByClassName("far");
+    // for (var i = 0; i < check.length; i++) {
+    //     check[i].classList += " check";
+    // }
 };
 
 function taoBangEdit(arr) {
@@ -123,11 +143,25 @@ function xoaTask(id) {
  * Thay đổi task
  */
 function changeTask(id) {
-    service.changeDanhSachTaskService(id)
+    service.layDanhSachTaskServiceChange(id)
         .then(function(result) {
-            alert("Changed success");
-            console.log(result.data);
-            taoBangEdit(result.data);
+            task = result.data;
+            console.log(task);
+            if (task.status === true) { task.status = false } else if (task.status === false) { task.status = true; }
+            console.log(task);
+
+            //update
+            service
+                .changeDanhSachTaskService(task)
+                .then(function(result) {
+                    // alert("Changed success");
+                    alert("Change Status Success!");
+                    layDanhSachTask();
+                })
+                .catch(function(err) {
+                    alert("Failed");
+                })
+
         })
         .catch(function(err) {
             console.log(err);
